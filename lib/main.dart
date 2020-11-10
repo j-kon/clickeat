@@ -1,49 +1,32 @@
+import 'package:clickeat/clickeat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clickeat/app/app_color.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(ClickEatApp());
+}
 
-class MyApp extends StatelessWidget {
+class ClickEatApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(title: 'Foodomaa'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final _key = UniqueKey();
-  String _url = 'https://clickeat.ng/';
-
-  Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
-    return Color(int.parse(hexString.replaceFirst('#', '0x$alphaChannel')));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Foodomaa'),
-        backgroundColor: AppColors.primaryColor,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: AppColors.primaryColor,
+        fontFamily: 'roboto',
+        textTheme: TextTheme(
+          headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+        ),
       ),
-      body: WebView(
-        key: _key,
-        initialUrl: _url,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController _tmpWebController) {},
-      ),
+      home: ClickEat(title: 'ClickEat'),
+      initialRoute: ClickEat.id,
+      routes: {
+        ClickEat.id: (context) => ClickEat(),
+      },
     );
   }
 }
